@@ -39,12 +39,13 @@ app.use(router);
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
 app.use('/', auth);
+app.use('/travelpost', post);
 
 app.use(checkSession);
 
 app.use('/user', user);
 app.use('/mytravel', mytravel);
-app.use('/travelpost', post);
+
 app.use('/travelplan', plan);
 
 // 서버 시작

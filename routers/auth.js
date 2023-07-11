@@ -28,7 +28,7 @@ router.post('/signup', (req, res) => {
                         console.error('Error querying MySQL:', error);
                         res.status(500).json({ error: 'Failed to retrieve data from MySQL' });
                     } else {                    
-                        res.status(200).send('Signup successful');
+                        res.status(200).send('Signup success');
                     }
                   });
                 }
@@ -81,7 +81,7 @@ router.post('/logout', (req, res) => {
         console.error('Error destroying session:', error);
         res.status(500).json({ error: 'Failed to destroy session' });
       } else {
-        res.status(200).send('Logged out successfully');
+        res.status(200).send('Logged out success');
       }
     });
   });

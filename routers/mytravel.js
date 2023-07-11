@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../utils/db');
 
-  router.post('/upload', (req, res) => {
+  router.post('/', (req, res) => {
     const iduser = req.session.loginData.iduser;
     const place = req.body.place;
     const start = new Date(req.body.start);
@@ -16,12 +16,13 @@ const connection = require('../utils/db');
             console.error('Error querying MySQL:', error);
             res.status(500).json({ error: 'Failed to retrieve data from MySQL' });
         } else {
-            res.redirect(`/user`);
+            res.status(200).redirect(`/user`);
         }
     });
   });
 
-  router.post('/modify', (req, res) => {
+  /*
+  router.put('/', (req, res) => {
     const iduser = req.session.loginData.iduser;
     const idtravelplan = req.body.idtravelplan;
     const place = req.body.place;
@@ -39,15 +40,13 @@ const connection = require('../utils/db');
             res.redirect(`/user`);
         }
     });
-
   });
+  */
 
-  router.post('/delete', (req, res) => {
+  router.delete('/', (req, res) => {
     const idtravelplan = req.body.idtravelplan;
 
-    connection.query(
-      `DELETE FROM travelplan WHERE idtravelplan = ?`,
-      [idtravelplan], (error, results) => {
+    connection.query(`DELETE FROM travelplan WHERE idtravelplan = ?`, [idtravelplan], (error, results) => {
         if (error) {
           console.error('Error querying MySQL:', error);
           res.status(500).json({ error: 'Failed to retrieve data from MySQL' });
@@ -59,5 +58,19 @@ const connection = require('../utils/db');
     );
 
   });
+
+  router.get('/travelplace', (req, res) => {
+
+    connection.query(`SELECT idtravelplace as place FROM travelplace ORDER BY idtravelplace`, (error, results) =>{
+      if (error) {
+        console.error('Error querying MySQL:', error);
+        res.status(500).json({ error: 'Failed to retrieve data from MySQL' });
+      } 
+      else {
+        res.send(results);
+      }
+    });
+  });
+
 
   module.exports = router;

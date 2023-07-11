@@ -57,7 +57,7 @@ router.get('/:idtravelplan', (req, res) => {
 });
 
 
-  router.post('/upload', (req, res) => {
+  router.post('/', (req, res) => {
     const iduser = req.session.loginData.iduser;
     const idtravelplan = req.body.idtravelplan;
     const day = req.body.day;
@@ -78,7 +78,7 @@ router.get('/:idtravelplan', (req, res) => {
   });
   
 
-  router.post('/delete', (req, res) => {
+  router.delete('/', (req, res) => {
     const idtravelplan = req.body.idtravelplan;
     const day = req.body.day;
     const spot = req.body.spot;
