@@ -16,7 +16,7 @@ const connection = require('../utils/db');
             console.error('Error querying MySQL:', error);
             res.status(500).json({ error: 'Failed to retrieve data from MySQL' });
         } else {
-            res.status(200).redirect(`/user`);
+            res.status(200).send('Travelplan upload success');
         }
     });
   });
@@ -52,7 +52,7 @@ const connection = require('../utils/db');
           res.status(500).json({ error: 'Failed to retrieve data from MySQL' });
         } 
         else {
-          res.status(200).redirect(`/user`);
+          res.status(200).send('Travelplan delete success');
         }
       }
     );

@@ -35,7 +35,7 @@ router.get('/:idtravelplan', (req, res) => {
                 return acc;
               }, []);
 
-              for (let i = 1; i <= result1[0].days + 1; i++) {
+              for (let i = 1; i <= (result1[0].days + 2); i++) {
                 const existingEntry = daySpotMap.find((entry) => entry.day === i);
                 if (!existingEntry) {
                   daySpotMap.push({ day: i, spot: [] });

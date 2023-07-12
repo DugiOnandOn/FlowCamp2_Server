@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10
 
 router.post('/signup', (req, res) => {
+
     if (req.session.loginData) {
         return res.redirect('/user');
       }
@@ -13,6 +14,7 @@ router.post('/signup', (req, res) => {
     const iduser = req.body.iduser;
     const username = req.body.username;
     const password = req.body.password;
+
 
     bcrypt.hash(password, saltRounds, (error, hash) => {
         const hashpassword = hash;
@@ -22,7 +24,7 @@ router.post('/signup', (req, res) => {
                 res.send('Already exist');
             }
             else {
-                connection.query(`INSERT INTO user(iduser, username, password) VALUES(?, ?, ?)`,
+                connection.query(`INSERT INTO user(iduser, username, password, image) VALUES(?, ?, ?, "https://kyeah.s3.us-east-2.amazonaws.com/2ca03c40-1fe3-11ee-8c89-2941b0a58607")`,
                 [iduser, username, hashpassword], (error, results) => {
                     if (error) {
                         console.error('Error querying MySQL:', error);
@@ -37,12 +39,15 @@ router.post('/signup', (req, res) => {
     });
     
 router.post('/login', (req, res) => {
-    if (req.session.loginData) {
-        return res.redirect('/user');
-      }
-    
+
+  if (req.session.loginData) {
+    return res.redirect('/user');
+  }
+
   const iduser = req.body.iduser;
   const password = req.body.password;
+
+  console.log(iduser, password);
 
   connection.query(`SELECT password FROM user WHERE iduser = ?`, [iduser], (error, results) => {
     if (error) {
@@ -58,7 +63,7 @@ router.post('/login', (req, res) => {
           };
           req.session.save(error => {
             if (error) console.log(error);
-            res.status(200).redirect(`/user`);
+            res.status(200).send('Login success');
           });
         } else {
           // 로그인 실패
